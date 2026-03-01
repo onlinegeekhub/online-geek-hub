@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Geek Hub — Web Development &amp; Remote Tech Jobs</title>
+<meta name="description" content="Online Geek Hub — Affordable web development for micro businesses and curated remote Tech &amp; AI jobs.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#0A0A0A;
+  --off:#111111;
+  --card:#161616;
+  --card2:#1E1E1E;
+  --b1:#2A2A2A;
+  --b2:#333333;
+  --g1:#888888;
+  --g2:#555555;
+  --g3:#CCCCCC;
+  --white:#F5F5F5;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#c1,#c2{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;top:0;left:0;transform:translate(-50%,-50%)}
+#c1{width:6px;height:6px;background:var(--white)}
+#c2{width:30px;height:30px;border:1px solid rgba(255,255,255,.22);transition:transform .38s ease,width .28s,height .28s}
+body:has(a:hover) #c2,body:has(button:hover) #c2{width:50px;height:50px;border-color:var(--white)}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto;z-index:200;padding:28px 60px;display:flex;justify-content:space-between;align-items:center;transition:padding .4s,background .4s,border-color .4s}
+nav.stuck{background:rgba(10,10,10,.96);backdrop-filter:blur(18px);padding:15px 60px;border-bottom:1px solid var(--b1)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;color:var(--white);text-decoration:none}
+.logo em{color:var(--g3);font-style:normal}
+.nav-ul{display:flex;gap:36px;list-style:none;align-items:center}
+.nav-ul a{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--g1);text-decoration:none;font-weight:400;transition:color .25s}
+.nav-ul a:hover{color:var(--white)}
+.nav-cta{background:var(--white)!important;color:var(--black)!important;padding:10px 24px;font-weight:500!important;transition:background .3s,transform .3s!important;letter-spacing:.1em!important}
+.nav-cta:hover{background:var(--g3)!important;transform:translateY(-1px)!important}
+.hb{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hb span{width:22px;height:1.5px;background:var(--white);display:block;transition:.3s}
+
+/* MOBILE NAV */
+.mobnav{position:fixed;inset:0;background:var(--black);z-index:190;display:none;flex-direction:column;align-items:center;justify-content:center;gap:40px}
+.mobnav.open{display:flex}
+.mobnav a{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.1em;color:var(--white);text-decoration:none;transition:color .2s}
+.mobnav a:hover{color:var(--g3)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 60px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--b1)}
+.hero-diag{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.011) 0,rgba(255,255,255,.011) 1px,transparent 0,transparent 50%);background-size:24px 24px;pointer-events:none}
+.hero-wm{position:absolute;bottom:-60px;left:-10px;font-family:'Bebas Neue',sans-serif;font-size:30vw;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.033);pointer-events:none;z-index:0;white-space:nowrap;letter-spacing:-.02em;user-select:none}
+.hero-corner{position:absolute;top:130px;right:60px;z-index:2;text-align:right}
+.hc-tag{font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--g2);margin-bottom:18px}
+.hc-nums{display:flex;gap:28px;justify-content:flex-end}
+.hcn .n{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.05em;color:var(--white);line-height:1;display:block}
+.hcn .l{font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g2);margin-top:3px}
+.hero-body{position:relative;z-index:2;max-width:900px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--b2);padding:7px 16px;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--g1);margin-bottom:28px}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--white);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.2}50%{opacity:1}}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,10vw,10rem);line-height:.92;letter-spacing:.02em;margin-bottom:28px}
+h1 .outline{-webkit-text-stroke:1.5px var(--white);color:transparent}
+h1 .dim{color:var(--g2)}
+.hero-p{font-size:.95rem;color:var(--g1);line-height:1.8;max-width:520px;font-weight:300;margin-bottom:48px}
+.hero-p strong{color:var(--white);font-weight:500}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-solid{background:var(--white);color:var(--black);padding:15px 40px;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1px solid var(--white);transition:background .3s,transform .3s;display:inline-block}
+.btn-solid:hover{background:var(--g3);transform:translateY(-2px)}
+.btn-ghost{border:1px solid var(--b2);color:var(--g3);padding:15px 40px;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:border-color .3s,color .3s;display:inline-block}
+.btn-ghost:hover{border-color:var(--white);color:var(--white)}
+
+/* TICKER */
+.ticker{background:var(--white);overflow:hidden;white-space:nowrap;padding:13px 0}
+.tk-inner{display:inline-block;animation:tk 30s linear infinite}
+.tk-inner span{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.2em;color:var(--black);padding:0 28px}
+.tk-inner .dot{color:#999;padding:0 8px}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+.stats{display:flex;border-bottom:1px solid var(--b1)}
+.stat{flex:1;padding:32px 24px;text-align:center;border-right:1px solid var(--b1);transition:background .3s}
+.stat:last-child{border-right:none}
+.stat:hover{background:var(--card)}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.05em;color:var(--white);display:block;line-height:1}
+.stat-l{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--g1);margin-top:6px;display:block}
+
+/* SECTIONS */
+section{padding:110px 60px}
+.sec-tag{font-size:.58rem;letter-spacing:.38em;text-transform:uppercase;color:var(--g1);margin-bottom:10px}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);letter-spacing:.03em;line-height:.95;margin-bottom:16px}
+.sec-sub{font-size:.87rem;color:var(--g1);line-height:1.8;font-weight:300;max-width:480px}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* SERVICES */
+.services{background:var(--off);border-bottom:1px solid var(--b1)}
+.svc-rows{margin-top:60px}
+.svc-row{display:grid;grid-template-columns:72px 1fr 1.1fr auto;gap:36px;align-items:center;padding:34px 0;border-top:1px solid var(--b1);transition:padding .3s}
+.svc-row:last-child{border-bottom:1px solid var(--b1)}
+.svc-row:hover{padding-left:14px}
+.svc-num{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.1em;color:var(--g2)}
+.svc-name{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.04em;transition:color .3s}
+.svc-row:hover .svc-name{color:var(--g3)}
+.svc-desc{font-size:.8rem;color:var(--g1);line-height:1.7;font-weight:300}
+.svc-pill{border:1px solid var(--b2);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g1);padding:6px 14px;white-space:nowrap;transition:border-color .3s,color .3s}
+.svc-row:hover .svc-pill{border-color:var(--g2);color:var(--g3)}
+
+/* JOBS */
+.jobs{background:var(--black);border-bottom:1px solid var(--b1)}
+.jobs-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:20px}
+.jfilters{display:flex;gap:8px;flex-wrap:wrap}
+.jf{background:none;border:1px solid var(--b1);color:var(--g1);font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:8px 18px;cursor:pointer;transition:all .3s}
+.jf.on,.jf:hover{border-color:var(--g2);color:var(--white);background:var(--card)}
+.job-list{display:flex;flex-direction:column;gap:2px;margin-bottom:28px}
+.job-card{background:var(--card);border:1px solid var(--b1);padding:26px 32px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;transition:background .3s,border-color .3s,transform .3s;position:relative;overflow:hidden}
+.job-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--white);transform:scaleY(0);transition:transform .3s;transform-origin:top}
+.job-card:hover{background:var(--card2);border-color:var(--b2);transform:translateX(3px)}
+.job-card:hover::before{transform:scaleY(1)}
+.job-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.job-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.05em}
+.badge{font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;font-family:'DM Sans',sans-serif;font-weight:500}
+.b-new{background:var(--white);color:var(--black)}
+.b-ai{border:1px solid var(--g2);color:var(--g3)}
+.job-meta{display:flex;gap:4px;flex-wrap:wrap}
+.job-meta span{font-size:.7rem;color:var(--g1);font-weight:300}
+.job-meta .sep{color:var(--b2)}
+.job-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.jtag{font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--b1);color:var(--g2);padding:3px 8px}
+.job-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0}
+.job-sal{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em}
+.job-apply{background:none;border:1px solid var(--b2);color:var(--g3);font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:8px 20px;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
+.job-apply:hover{border-color:var(--white);color:var(--white);background:rgba(255,255,255,.04)}
+
+/* REFERRAL STRIP */
+.ref-strip{background:var(--card);border:1px solid var(--b1);padding:22px 30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+.ref-label{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g1);flex-shrink:0;white-space:nowrap}
+.ref-vline{width:1px;height:26px;background:var(--b2);flex-shrink:0}
+.ref-links{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.ref-link{display:flex;align-items:center;gap:10px;border:1px solid var(--b1);padding:11px 14px;text-decoration:none;transition:all .3s;flex:1;min-width:150px}
+.ref-link:hover{border-color:var(--b2);background:var(--card2)}
+.ref-icon{font-size:.95rem;flex-shrink:0}
+.ref-name{font-size:.73rem;font-weight:500;color:var(--white);display:block;line-height:1.2}
+.ref-sub{font-size:.6rem;color:var(--g1);font-weight:300;margin-top:1px;display:block}
+.ref-arr{margin-left:auto;color:var(--g2);font-size:.78rem;flex-shrink:0;transition:all .3s}
+.ref-link:hover .ref-arr{transform:translateX(3px);color:var(--white)}
+
+.post-job{text-align:center;padding:40px;background:var(--card);border:1px solid var(--b1)}
+.post-job p{font-size:.78rem;color:var(--g1);margin-bottom:12px;font-weight:300}
+.post-job h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.05em;margin-bottom:20px}
+
+/* ABOUT */
+.about{background:var(--off);border-bottom:1px solid var(--b1)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:60px}
+.about-box{background:var(--card);border:1px solid var(--b1);padding:48px;height:440px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.about-box::before{content:'2';position:absolute;right:-30px;bottom:-60px;font-family:'Bebas Neue',sans-serif;font-size:20rem;line-height:1;color:rgba(255,255,255,.024);pointer-events:none}
+.ab-tag{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g1);position:relative;z-index:1}
+.ab-mid{position:relative;z-index:1}
+.ab-big{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;letter-spacing:.04em;line-height:.95;margin-bottom:12px}
+.ab-mid p{font-size:.78rem;color:var(--g1);line-height:1.7;font-weight:300}
+.ab-bot{display:flex;gap:32px;position:relative;z-index:1;border-top:1px solid var(--b1);padding-top:24px}
+.ab-stat .n{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.05em;display:block;line-height:1}
+.ab-stat .l{font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g1);margin-top:3px}
+.about-body{font-size:.84rem;color:var(--g1);line-height:1.9;font-weight:300;margin-bottom:14px}
+.about-body strong{color:var(--white);font-weight:500}
+.plat-h{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g1);margin:28px 0 14px;display:block}
+.plat-list{display:flex;flex-direction:column;gap:2px}
+.plat{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--card);border:1px solid var(--b1);transition:all .3s;text-decoration:none}
+.plat:hover{background:var(--card2);border-color:var(--b2);transform:translateX(4px)}
+.plat-icon{font-size:.95rem;flex-shrink:0}
+.plat-name{font-size:.78rem;font-weight:500;color:var(--white)}
+.plat-desc{font-size:.66rem;color:var(--g1);font-weight:300}
+.plat-arr{margin-left:auto;color:var(--g2);transition:all .3s;font-size:.78rem}
+.plat:hover .plat-arr{color:var(--white);transform:translateX(3px)}
+
+/* CONTACT */
+.contact{background:var(--black);border-bottom:1px solid var(--b1)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:start;margin-top:60px}
+.contact-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,6rem);line-height:.92;letter-spacing:.03em;margin-bottom:20px}
+.contact-big em{font-style:normal;-webkit-text-stroke:1.5px var(--white);color:transparent}
+.contact-left > p{font-size:.84rem;color:var(--g1);line-height:1.8;font-weight:300;margin-bottom:32px}
+.cc-list{display:flex;flex-direction:column;gap:2px}
+.cc{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--card);border:1px solid var(--b1);text-decoration:none;transition:background .3s,border-color .3s}
+.cc:hover{background:var(--card2);border-color:var(--b2)}
+.cc-icon{width:36px;height:36px;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0}
+.cc-label{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g1);display:block;margin-bottom:2px}
+.cc-val{font-size:.8rem;color:var(--white);font-weight:300}
+.cc-arr{margin-left:auto;color:var(--g2);font-size:.82rem;transition:transform .3s,color .3s}
+.cc:hover .cc-arr{transform:translateX(3px);color:var(--white)}
+.cf{display:flex;flex-direction:column;gap:14px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f-g{display:flex;flex-direction:column;gap:6px}
+.f-l{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--g1)}
+.fi,.fs,.fta{background:var(--card);border:1px solid var(--b1);color:var(--white);padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:300;outline:none;transition:border-color .3s;width:100%}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--g2)}
+.fs{appearance:none;cursor:pointer}
+.fta{resize:vertical;min-height:110px}
+.f-btn{background:var(--white);color:var(--black);border:1px solid var(--white);padding:15px 40px;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .3s,transform .3s;align-self:flex-start}
+.f-btn:hover{background:var(--g3);transform:translateY(-2px)}
+.f-btn:disabled{background:var(--card2);color:var(--g1);border-color:var(--b1);transform:none;cursor:default}
+
+/* FOOTER */
+footer{background:#050505;border-top:1px solid var(--b1);padding:64px 60px 32px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px}
+.foot-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em;margin-bottom:14px}
+.foot-logo em{color:var(--g1);font-style:normal}
+.foot-brand p{font-size:.78rem;color:var(--g1);line-height:1.75;font-weight:300;max-width:260px}
+.foot-col h4{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g2);margin-bottom:18px;font-weight:500}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-col a{font-size:.78rem;color:var(--g1);text-decoration:none;font-weight:300;transition:color .25s}
+.foot-col a:hover{color:var(--white)}
+.foot-bottom{border-top:1px solid var(--b1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.foot-copy{font-size:.64rem;color:var(--g2);letter-spacing:.06em}
+.socials{display:flex;gap:2px}
+.soc{width:36px;height:36px;border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;font-size:.64rem;color:var(--g1);text-decoration:none;transition:all .3s;font-weight:500}
+.soc:hover{border-color:var(--g2);color:var(--white);background:var(--card)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:18px 24px}
+  nav.stuck{padding:14px 24px}
+  .nav-ul{display:none}
+  .hb{display:flex}
+  .hero{padding:0 24px 80px}
+  .hero-corner{display:none}
+  h1{font-size:4rem}
+  section{padding:80px 24px}
+  .svc-row{grid-template-columns:40px 1fr;gap:16px}
+  .svc-desc,.svc-pill{display:none}
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .job-card{grid-template-columns:1fr}
+  .job-right{align-items:flex-start}
+  .ref-strip{flex-direction:column;align-items:flex-start}
+  .ref-vline{width:100%;height:1px}
+  .stats{flex-wrap:wrap}
+  .stat{min-width:50%}
+  .f-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="c1"></div>
+<div id="c2"></div>
+
+<!-- MOBILE NAV -->
+<div class="mobnav" id="mobnav">
+  <a href="#services" onclick="closeMob()">Services</a>
+  <a href="#jobs" onclick="closeMob()">Jobs</a>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">Online <em>Geek</em> Hub</a>
+  <ul class="nav-ul">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#jobs">Jobs Board</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="hb" onclick="toggleMob()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-diag"></div>
+  <div class="hero-wm">GEEK</div>
+  <div class="hero-corner">
+    <div class="hc-tag">Est. 2026 — Remote First</div>
+    <div class="hc-nums">
+      <div class="hcn"><span class="n">100%</span><span class="l">Affordable</span></div>
+      <div class="hcn"><span class="n">48H</span><span class="l">Delivery</span></div>
+      <div class="hcn"><span class="n">AI</span><span class="l">Jobs Focus</span></div>
+    </div>
+  </div>
+  <div class="hero-body">
+    <div class="eyebrow"><span class="pulse"></span>Web Dev · Remote Tech &amp; AI Jobs</div>
+    <h1>YOUR HUB<br><span class="outline">FOR TECH</span><br><span class="dim">THAT PAYS.</span></h1>
+    <p class="hero-p"><strong>Affordable websites for micro businesses.</strong> Curated remote Tech &amp; AI job listings for developers. Two problems. One place.</p>
+    <div class="btns">
+      <a href="#services" class="btn-solid">Our Services</a>
+      <a href="#jobs" class="btn-ghost">Browse Jobs</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="tk-inner">
+    <span>Web Development</span><span class="dot">◆</span>
+    <span>Remote AI Jobs</span><span class="dot">◆</span>
+    <span>Micro Business Friendly</span><span class="dot">◆</span>
+    <span>Google Sites Migration</span><span class="dot">◆</span>
+    <span>Tech &amp; Dev Roles</span><span class="dot">◆</span>
+    <span>Affordable Pricing</span><span class="dot">◆</span>
+    <span>Photography Sites</span><span class="dot">◆</span>
+    <span>Remote First</span><span class="dot">◆</span>
+    <span>Web Development</span><span class="dot">◆</span>
+    <span>Remote AI Jobs</span><span class="dot">◆</span>
+    <span>Micro Business Friendly</span><span class="dot">◆</span>
+    <span>Google Sites Migration</span><span class="dot">◆</span>
+    <span>Tech &amp; Dev Roles</span><span class="dot">◆</span>
+    <span>Affordable Pricing</span><span class="dot">◆</span>
+    <span>Photography Sites</span><span class="dot">◆</span>
+    <span>Remote First</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat rv"><span class="stat-n">100%</span><span class="stat-l">Affordable</span></div>
+  <div class="stat rv d1"><span class="stat-n">48HR</span><span class="stat-l">Turnaround</span></div>
+  <div class="stat rv d2"><span class="stat-n">AI</span><span class="stat-l">Focused Jobs</span></div>
+  <div class="stat rv d3"><span class="stat-n">∞</span><span class="stat-l">Revisions</span></div>
+</div>
+
+<!-- SERVICES -->
+<section class="services rv" id="services">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px">
+    <div>
+      <p class="sec-tag">What We Build</p>
+      <h2 class="sec-h">Web Dev<br>Services</h2>
+    </div>
+    <p class="sec-sub">Professional websites for micro businesses — fast, honest, and priced so they don't burn your pockets.</p>
+  </div>
+  <div class="svc-rows">
+    <div class="svc-row rv">
+      <div class="svc-num">01</div>
+      <div class="svc-name">Business Websites</div>
+      <div class="svc-desc">Custom-designed, mobile-first websites built around your brand and goals. Domain, hosting, and contact forms included.</div>
+      <span class="svc-pill">From $199</span>
+    </div>
+    <div class="svc-row rv d1">
+      <div class="svc-num">02</div>
+      <div class="svc-name">Photography &amp; Portfolio Sites</div>
+      <div class="svc-desc">Gallery walls, booking forms, print stores and client portals. Your work deserves more than a Google Sites page.</div>
+      <span class="svc-pill">From $399</span>
+    </div>
+    <div class="svc-row rv d2">
+      <div class="svc-num">03</div>
+      <div class="svc-name">Google Sites Migration</div>
+      <div class="svc-desc">We move your entire Google Sites presence to a professional platform — all content, photos, and structure intact.</div>
+      <span class="svc-pill">From $299</span>
+    </div>
+    <div class="svc-row rv d3">
+      <div class="svc-num">04</div>
+      <div class="svc-name">Maintenance &amp; Support</div>
+      <div class="svc-desc">Monthly updates, security checks, and a direct WhatsApp support line. We keep your site healthy and running.</div>
+      <span class="svc-pill">From $49/mo</span>
+    </div>
+  </div>
+  <div style="margin-top:44px"><a href="#contact" class="btn-solid">Get a Free Quote →</a></div>
+</section>
+
+<!-- JOBS -->
+<section class="jobs rv" id="jobs">
+  <div class="jobs-head">
+    <div>
+      <p class="sec-tag">Remote Opportunities</p>
+      <h2 class="sec-h">Tech &amp; AI<br>Jobs Board</h2>
+    </div>
+    <div class="jfilters">
+      <button class="jf on" onclick="filterJobs(this,'all')">All</button>
+      <button class="jf" onclick="filterJobs(this,'ai')">AI / ML</button>
+      <button class="jf" onclick="filterJobs(this,'dev')">Development</button>
+      <button class="jf" onclick="filterJobs(this,'data')">Data</button>
+    </div>
+  </div>
+
+  <div class="job-list">
+    <div class="job-card rv" data-cat="ai">
+      <div>
+        <div class="job-top"><div class="job-title">AI Prompt Engineer</div><span class="badge b-new">New</span><span class="badge b-ai">AI</span></div>
+        <div class="job-meta"><span>Anthropic</span><span class="sep"> · </span><span>🌍 Remote — Worldwide</span><span class="sep"> · </span><span>Full-time</span><span class="sep"> · </span><span>Posted today</span></div>
+        <div class="job-tags"><span class="jtag">Prompt Engineering</span><span class="jtag">LLMs</span><span class="jtag">Python</span></div>
+      </div>
+      <div class="job-right"><div class="job-sal">$85k–$120k</div><a href="#contact" class="job-apply">Apply Now</a></div>
+    </div>
+
+    <div class="job-card rv d1" data-cat="dev">
+      <div>
+        <div class="job-top"><div class="job-title">Full Stack Web Developer</div><span class="badge b-new">New</span></div>
+        <div class="job-meta"><span>TechStart Inc.</span><span class="sep"> · </span><span>🌍 Remote — Africa &amp; EU</span><span class="sep"> · </span><span>Contract</span><span class="sep"> · </span><span>2 days ago</span></div>
+        <div class="job-tags"><span class="jtag">React</span><span class="jtag">Node.js</span><span class="jtag">PostgreSQL</span></div>
+      </div>
+      <div class="job-right"><div class="job-sal">$50k–$75k</div><a href="#contact" class="job-apply">Apply Now</a></div>
+    </div>
+
+    <div class="job-card rv d2" data-cat="ai">
+      <div>
+        <div class="job-top"><div class="job-title">Machine Learning Engineer</div><span class="badge b-ai">AI</span></div>
+        <div class="job-meta"><span>DeepMind</span><span class="sep"> · </span><span>🌍 Remote — Global</span><span class="sep"> · </span><span>Full-time</span><span class="sep"> · </span><span>3 days ago</span></div>
+        <div class="job-tags"><span class="jtag">PyTorch</span><span class="jtag">TensorFlow</span><span class="jtag">MLOps</span></div>
+      </div>
+      <div class="job-right"><div class="job-sal">$110k–$160k</div><a href="#contact" class="job-apply">Apply Now</a></div>
+    </div>
+
+    <div class="job-card rv d3" data-cat="data">
+      <div>
+        <div class="job-top"><div class="job-title">Data Analyst — AI Products</div><span class="badge b-ai">AI</span></div>
+        <div class="job-meta"><span>OpenAI</span><span class="sep"> · </span><span>🌍 Remote — US &amp; EU</span><span class="sep"> · </span><span>Full-time</span><span class="sep"> · </span><span>5 days ago</span></div>
+        <div class="job-tags"><span class="jtag">SQL</span><span class="jtag">Python</span><span class="jtag">Tableau</span></div>
+      </div>
+      <div class="job-right"><div class="job-sal">$70k–$95k</div><a href="#contact" class="job-apply">Apply Now</a></div>
+    </div>
+
+    <div class="job-card rv d4" data-cat="dev">
+      <div>
+        <div class="job-top"><div class="job-title">Frontend Developer — React</div></div>
+        <div class="job-meta"><span>Remote First Co.</span><span class="sep"> · </span><span>🌍 Remote — Worldwide</span><span class="sep"> · </span><span>Freelance</span><span class="sep"> · </span><span>1 week ago</span></div>
+        <div class="job-tags"><span class="jtag">React</span><span class="jtag">TypeScript</span><span class="jtag">Tailwind</span></div>
+      </div>
+      <div class="job-right"><div class="job-sal">$35–$65/hr</div><a href="#contact" class="job-apply">Apply Now</a></div>
+    </div>
+  </div>
+
+  <!-- REFERRAL STRIP -->
+  <div class="ref-strip rv">
+    <span class="ref-label">Also Earn Online</span>
+    <div class="ref-vline"></div>
+    <div class="ref-links">
+      <a href="https://remoat-teams.referral-factory.com/uNJ8RgXS" target="_blank" rel="noopener" class="ref-link">
+        <span class="ref-icon">🎙️</span>
+        <div><span class="ref-name">Remoate Teams</span><span class="ref-sub">Transcription — earn from home</span></div>
+        <span class="ref-arr">→</span>
+      </a>
+      <a href="https://audit.atlascapture.io/?ref_id=69679dae8e21d20aa091b6e3" target="_blank" rel="noopener" class="ref-link">
+        <span class="ref-icon">📸</span>
+        <div><span class="ref-name">Atlas Capture</span><span class="ref-sub">Audit photography — field work</span></div>
+        <span class="ref-arr">→</span>
+      </a>
+      <a href="https://tinyurl.com/2nna6tyx" target="_blank" rel="noopener" class="ref-link">
+        <span class="ref-icon">🖱️</span>
+        <div><span class="ref-name">ClickWorker</span><span class="ref-sub">Microtasks — flexible online work</span></div>
+        <span class="ref-arr">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="post-job rv">
+    <p>Hiring? Reach a focused audience of Tech &amp; AI professionals.</p>
+    <h3>Post a Job on Online Geek Hub</h3>
+    <a href="#contact" class="btn-solid">Post a Job →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about rv" id="about">
+  <p class="sec-tag">Who We Are</p>
+  <h2 class="sec-h">Built by geeks,<br>for businesses.</h2>
+  <div class="about-grid">
+    <div class="rv">
+      <div class="about-box">
+        <div class="ab-tag">Online Geek Hub — Est. 2026</div>
+        <div class="ab-mid">
+          <div class="ab-big">TWO<br>PROBLEMS.<br>ONE HUB.</div>
+          <p>Micro businesses need websites they can afford. Tech talent needs remote jobs worth their time. We solve both.</p>
+        </div>
+        <div class="ab-bot">
+          <div class="ab-stat"><span class="n">4</span><span class="l">Services</span></div>
+          <div class="ab-stat"><span class="n">AI</span><span class="l">Jobs Focus</span></div>
+          <div class="ab-stat"><span class="n">3+</span><span class="l">Earn Links</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="rv d1">
+      <p class="sec-tag">Our Story</p>
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.04em;line-height:.95;margin-bottom:20px">Two things micro businesses need most.</h3>
+      <p class="about-body">Online Geek Hub was built around a simple frustration: <strong>good websites cost too much</strong>, and <strong>good remote tech jobs are hard to find in one place</strong>. We built one hub to fix both.</p>
+      <p class="about-body">We build professional websites for micro businesses at prices that make sense — no agency markups. We also curate a focused board of remote Tech &amp; AI roles, plus share earn opportunities like transcription, field work, and microtasks.</p>
+      <p class="about-body">Follow us on TikTok and Reddit for tips, job alerts, and resources to grow your income online.</p>
+      <span class="plat-h">Find us on</span>
+      <div class="plat-list">
+        <a href="https://www.tiktok.com/@ongeeks" target="_blank" rel="noopener" class="plat">
+          <span class="plat-icon">🎵</span>
+          <div><div class="plat-name">TikTok — @ongeeks</div><div class="plat-desc">Tips, job alerts &amp; web dev tutorials</div></div>
+          <span class="plat-arr">→</span>
+        </a>
+        <a href="https://www.reddit.com/u/onlineGeekHub/s/ZVkEcaugWU" target="_blank" rel="noopener" class="plat">
+          <span class="plat-icon">🤖</span>
+          <div><div class="plat-name">Reddit — u/onlineGeekHub</div><div class="plat-desc">Community, job threads &amp; resources</div></div>
+          <span class="plat-arr">→</span>
+        </a>
+        <a href="https://wa.me/message/YIG7RHG3JZAPP1" target="_blank" rel="noopener" class="plat">
+          <span class="plat-icon">💬</span>
+          <div><div class="plat-name">WhatsApp</div><div class="plat-desc">Chat with us directly — quick responses</div></div>
+          <span class="plat-arr">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="sec-tag">Get in Touch</p>
+  <div class="contact-grid">
+    <div class="rv">
+      <div class="contact-big">LET'S<br>BUILD<br><em>TOGETHER.</em></div>
+      <p>Need a website, want to post a job, or just have a question? We respond within 24 hours — usually faster on WhatsApp.</p>
+      <div class="cc-list">
+        <a href="mailto:onlinegeekhub&#64;gmail.com" class="cc">
+          <div class="cc-icon">📧</div>
+          <div><span class="cc-label">Email</span><span class="cc-val">onlinegeekhub&#64;gmail.com</span></div>
+          <span class="cc-arr">→</span>
+        </a>
+        <a href="https://wa.me/message/YIG7RHG3JZAPP1" target="_blank" rel="noopener" class="cc">
+          <div class="cc-icon">💬</div>
+          <div><span class="cc-label">WhatsApp</span><span class="cc-val">Chat with us now</span></div>
+          <span class="cc-arr">→</span>
+        </a>
+        <a href="https://www.tiktok.com/@ongeeks" target="_blank" rel="noopener" class="cc">
+          <div class="cc-icon">🎵</div>
+          <div><span class="cc-label">TikTok</span><span class="cc-val">@ongeeks</span></div>
+          <span class="cc-arr">→</span>
+        </a>
+        <a href="https://www.reddit.com/u/onlineGeekHub/s/ZVkEcaugWU" target="_blank" rel="noopener" class="cc">
+          <div class="cc-icon">🤖</div>
+          <div><span class="cc-label">Reddit</span><span class="cc-val">u/onlineGeekHub</span></div>
+          <span class="cc-arr">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="cf rv d1">
+      <div class="f-row">
+        <div class="f-g"><label class="f-l">Your Name</label><input class="fi" type="text" placeholder="Full name"></div>
+        <div class="f-g"><label class="f-l">Email</label><input class="fi" type="email" placeholder="your@email.com"></div>
+      </div>
+      <div class="f-g">
+        <label class="f-l">I'm here because...</label>
+        <select class="fs">
+          <option value="">Select a reason</option>
+          <option>I need a website built</option>
+          <option>I want to post a job</option>
+          <option>Google Sites migration</option>
+          <option>I'm looking for tech work</option>
+          <option>General enquiry</option>
+        </select>
+      </div>
+      <div class="f-g"><label class="f-l">Business / Project Name</label><input class="fi" type="text" placeholder="Your business or project"></div>
+      <div class="f-g"><label class="f-l">Message</label><textarea class="fta" placeholder="Tell us what you need..."></textarea></div>
+      <button class="f-btn" onclick="submitForm(this)">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="foot-logo">Online <em>Geek</em> Hub</div>
+      <p>Web development for micro businesses + remote Tech &amp; AI jobs. Affordable, honest, remote-first.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Business Websites</a></li>
+        <li><a href="#services">Photography Sites</a></li>
+        <li><a href="#services">Google Sites Migration</a></li>
+        <li><a href="#services">Maintenance</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Jobs &amp; Earn</h4>
+      <ul>
+        <li><a href="#jobs">Browse All Jobs</a></li>
+        <li><a href="#jobs">AI &amp; ML Roles</a></li>
+        <li><a href="https://remoat-teams.referral-factory.com/uNJ8RgXS" target="_blank" rel="noopener">Remoate Teams</a></li>
+        <li><a href="https://audit.atlascapture.io/?ref_id=69679dae8e21d20aa091b6e3" target="_blank" rel="noopener">Atlas Capture</a></li>
+        <li><a href="https://tinyurl.com/2nna6tyx" target="_blank" rel="noopener">ClickWorker</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://www.tiktok.com/@ongeeks" target="_blank" rel="noopener">TikTok — @ongeeks</a></li>
+        <li><a href="https://www.reddit.com/u/onlineGeekHub/s/ZVkEcaugWU" target="_blank" rel="noopener">Reddit</a></li>
+        <li><a href="https://wa.me/message/YIG7RHG3JZAPP1" target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href="mailto:onlinegeekhub&#64;gmail.com">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span class="foot-copy">© 2026 Online Geek Hub. All rights reserved.</span>
+    <div class="socials">
+      <a class="soc" href="https://www.tiktok.com/@ongeeks" target="_blank" rel="noopener" title="TikTok">TT</a>
+      <a class="soc" href="https://www.reddit.com/u/onlineGeekHub/s/ZVkEcaugWU" target="_blank" rel="noopener" title="Reddit">RD</a>
+      <a class="soc" href="https://wa.me/message/YIG7RHG3JZAPP1" target="_blank" rel="noopener" title="WhatsApp">WA</a>
+      <a class="soc" href="mailto:onlinegeekhub&#64;gmail.com" title="Email">✉</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const c1=document.getElementById('c1'),c2=document.getElementById('c2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function tick(){
+  c1.style.transform=`translate(${mx}px,${my}px)`;
+  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  c2.style.transform=`translate(${rx}px,${ry}px)`;
+  requestAnimationFrame(tick);
+})();
+
+// Sticky nav
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('stuck',scrollY>80);
+},{passive:true});
+
+// Mobile nav
+function toggleMob(){document.getElementById('mobnav').classList.toggle('open')}
+function closeMob(){document.getElementById('mobnav').classList.remove('open')}
+
+// Job filter
+function filterJobs(btn,cat){
+  document.querySelectorAll('.jf').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.job-card').forEach(c=>{
+    c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';
+  });
+}
+
+// Form submit
+function submitForm(btn){
+  btn.textContent='✓ Sent! We\'ll be in touch soon.';
+  btn.disabled=true;
+}
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}
+  });
+},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
